@@ -3,13 +3,11 @@ package(
 )
 
 cc_library(
-    name = "geometry",
+    name = "util",
     srcs = glob([
         "*.h",
         "*.cc",
     ]),
     deps = [
-        "//reap/core/util",
     ],
-    alwayslink = 1,
 )

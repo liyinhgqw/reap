@@ -1,7 +1,7 @@
 /* Copyright 2020 The REAP Authors. All Rights Reserved. */
 
-#ifndef REAP_CORE_GEOMETRY_POINT_2D_H_
-#define REAP_CORE_GEOMETRY_POINT_2D_H_
+#ifndef REAP_CORE_GEOMETRY_LINE_H_
+#define REAP_CORE_GEOMETRY_LINE_H_
 
 #include <ostream>
 
@@ -11,29 +11,27 @@
 
 namespace reap {
 
-class Point2D : public Shape {
+class Line : public Shape {
  public:
-  Point2D(double x, double y);
-  virtual ~Point2D();
+  Line(const GVector &start, const GVector &end);
+  virtual ~Line();
 
-  double x() const {
-    return position_.x();
+  GVector start_point() const {
+    return start_point_;
   }
 
-  double y() const {
-    return position_.y();
+  GVector end_point() const {
+    return end_point_;
   }
 
   virtual Status Move(const GVector &offset) override;
   virtual Status Rotate(double angle, const GVector &center) override;
 
  private:
-  GVector position_;
+  GVector start_point_;
+  GVector end_point_;
 };
-
 
 }  // namespace reap
 
-std::ostream &operator << (std::ostream &out, const reap::Point2D &p);
-
-#endif  // REAP_CORE_GEOMETRY_POINT_2D_H_
+#endif  // REAP_CORE_GEOMETRY_LINE_H_

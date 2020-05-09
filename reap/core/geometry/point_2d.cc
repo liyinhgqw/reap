@@ -8,8 +8,14 @@ Point2D::Point2D(double x, double y): position_(x, y) {}
 
 Point2D::~Point2D() {}
 
-void Point2D::Move(double x, double y) {
-  position_ += GVector(x, y);
+Status Point2D::Move(const GVector &offset) {
+  position_ += offset;
+  return Status::OK();
+}
+
+Status Point2D::Rotate(double angle, const GVector &center) {
+  position_.Rotate(angle, center);
+  return Status::OK();
 }
 
 }  // namespace reap

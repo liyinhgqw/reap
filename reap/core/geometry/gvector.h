@@ -3,6 +3,8 @@
 #ifndef REAP_CORE_GEOMETRY_GVECTOR_H_
 #define REAP_CORE_GEOMETRY_GVECTOR_H_
 
+#include <ostream>
+
 namespace reap {
 
 class GVector {
@@ -24,8 +26,14 @@ class GVector {
   GVector& operator-=(const GVector &v);
   GVector& operator*=(const GVector &v);
   GVector& operator/=(const GVector &v);
-
   GVector operator-() const;
+
+  double GetLength() const;
+  double GetLengthSquare() const;
+  double GetLength2D() const;
+  double GetLengthSquare2D() const;
+  double GetAngle() const;
+  GVector &Rotate(double angle, const GVector &center);
 
  protected:
   double x_;
@@ -34,5 +42,7 @@ class GVector {
 };
 
 }  // namespace reap
+
+std::ostream& operator << (std::ostream& out, const reap::GVector &v);
 
 #endif  // REAP_CORE_GEOMETRY_GVECTOR_H_

@@ -8,5 +8,6 @@ cc_binary(
     ],
     deps = [
         "//reap/core/geometry",
+        "//reap/core/util",
     ],
 )
