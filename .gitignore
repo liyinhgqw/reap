@@ -1,0 +1,10 @@
+/bazel-*
+/bazel_pip
+*.pyc
+__pycache__
+*.swp
+cmake_build/
+cmake-build*/
+.idea/**
+.vscode/
+*.whl
