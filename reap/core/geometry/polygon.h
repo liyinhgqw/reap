@@ -14,6 +14,7 @@ namespace reap {
 class Polygon : public Shape {
  public:
   explicit Polygon(const std::vector<GVector> &points);
+  explicit Polygon(std::vector<GVector> &&points);
   virtual ~Polygon();
 
   std::vector<GVector> points() const {

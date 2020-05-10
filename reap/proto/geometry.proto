@@ -16,3 +16,9 @@ message GLine {
 message GPolygon {
   repeated GPoint points = 1;
 }
+
+message Graph {
+  repeated GPoint points = 1;
+  repeated GLine lines = 2;
+  repeated GPolygon polygon = 3;
+}

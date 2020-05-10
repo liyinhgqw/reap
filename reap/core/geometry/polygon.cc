@@ -2,9 +2,17 @@
 
 #include "reap/core/geometry/polygon.h"
 
+#include <utility>
+
 namespace reap {
 
-Polygon::Polygon(const std::vector<GVector> &points): points_() {}
+Polygon::Polygon(const std::vector<GVector> &points)
+  : points_(points) {
+}
+
+Polygon::Polygon(std::vector<GVector> &&points)
+    : points_(std::move(points)) {
+}
 
 Polygon::~Polygon() {}
 

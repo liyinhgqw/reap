@@ -14,7 +14,7 @@ add_executable(reap
         reap/core/geometry/point.h
         reap/core/geometry/gvector.cc
         reap/core/geometry/gvector.h
-        reap/core/main.cc
+        reap/test/main.cc
         reap/core/geometry/line.cc
         reap/core/geometry/line.h
         reap/core/geometry/polygon.cc
@@ -25,4 +25,6 @@ add_executable(reap
         reap/core/geometry/serializer.h
         reap/core/util/status.cc
         reap/core/util/status.h
-        reap/core/util/error.h)
+        reap/core/util/error.h
+        reap/plan/area_bound.cc
+        reap/plan/area_bound.h reap/plan/graph_util.cc reap/plan/graph_util.h)

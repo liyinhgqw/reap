@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package reap;
+
+option cc_enable_arenas = true;
+
+import "reap/proto/geometry.proto";
+
+message AreaBound {
+  GPolygon polygon = 1;
+  double angle = 2;
+}

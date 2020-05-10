@@ -5,7 +5,7 @@
 
 #include <google/protobuf/message.h>
 
-#include "reap/proto/reap.pb.h"
+#include "reap/proto/geometry.pb.h"
 #include "reap/core/util//status.h"
 #include "reap/core/geometry/shape.h"
 #include "reap/core/geometry/gvector.h"
