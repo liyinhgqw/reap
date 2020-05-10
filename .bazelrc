@@ -12,7 +12,6 @@ build --copt="-Werror=sign-compare"
 build --copt="-Werror=return-type"
 build --copt="-Werror=reorder"
 build --copt="-Werror=unused-variable"
-build --copt="-Werror=unused-but-set-variable"
 build --copt="-Werror=switch"
 build --copt="-O3"
 

@@ -34,7 +34,7 @@ Status ShapeSerializer::Serialize(const Line &shape, GLine *message) {
 template<>
 Status ShapeSerializer::Serialize(const Polygon &shape, GPolygon *message) {
   for (auto &v : shape.points()) {
-    auto point = message->add_points();
+    auto point = message->add_point();
     point->add_pos(v.x());
     point->add_pos(v.y());
     point->add_pos(v.z());

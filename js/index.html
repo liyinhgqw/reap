@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My first three.js app</title>
+    <style>
+      body { margin: 0; }
+      canvas { display: block; }
+    </style>
+  </head>
+  <body>
+
+    <div>
+      <input type="file" id="files" style="display: none" onchange="fileImport();">
+      <input type="button" id="fileImport" value="Import">
+    </div>
+
+    <script src="scripts/third_party/jquery-3.5.1.min.js"></script>
+    <script src="scripts/third_party/three.js"></script>
+    <script src="scripts/third_party/protobuf.js"></script>
+    <script src="scripts/graph.js"></script>
+  </body>
+</html>
