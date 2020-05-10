@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package reap;
+
+option cc_enable_arenas = true;
+
+message GPoint {
+  repeated double pos = 1;
+}
+
+message GLine {
+  GPoint start_point = 1;
+  GPoint end_point = 2;
+}
+
+message GPolygon {
+  repeated GPoint points = 1;
+}

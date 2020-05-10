@@ -1,10 +1,10 @@
 /* Copyright 2020 The REAP Authors. All Rights Reserved. */
 
-#include "polygon.h"
+#include "reap/core/geometry/polygon.h"
 
 namespace reap {
 
-Polygon::Polygon(std::vector<GVector> &points): points_() {}
+Polygon::Polygon(const std::vector<GVector> &points): points_() {}
 
 Polygon::~Polygon() {}
 

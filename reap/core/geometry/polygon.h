@@ -13,15 +13,15 @@ namespace reap {
 
 class Polygon : public Shape {
  public:
-  Polygon(std::vector<GVector> &points);
+  explicit Polygon(const std::vector<GVector> &points);
   virtual ~Polygon();
 
   std::vector<GVector> points() const {
     return points_;
   }
 
-  virtual Status Move(const GVector &offset) override;
-  virtual Status Rotate(double angle, const GVector &center) override;
+  Status Move(const GVector &offset) override;
+  Status Rotate(double angle, const GVector &center) override;
 
  private:
   std::vector<GVector> points_;

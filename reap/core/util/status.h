@@ -3,6 +3,7 @@
 #ifndef REAP_CORE_UTIL_STATUS_H_
 #define REAP_CORE_UTIL_STATUS_H_
 
+#include <memory>
 #include <string>
 
 #include "reap/core/util/error.h"

@@ -1,6 +1,6 @@
 /* Copyright 2020 The REAP Authors. All Rights Reserved. */
 
-#include "line.h"
+#include "reap/core/geometry/line.h"
 
 namespace reap {
 
@@ -22,7 +22,5 @@ Status Line::Rotate(double angle, const GVector &center) {
   end_point_.Rotate(angle, center);
   return Status::OK();
 }
-
-
 
 }  // namespace reap
