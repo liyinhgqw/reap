@@ -9,3 +9,5 @@ cmake-build*/
 .vscode/
 *.whl
 *.pb
+.DS_Store
+data/

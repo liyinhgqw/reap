@@ -2,18 +2,31 @@ $("#fileImport").click(function () {
     $("#files").click();
 })
 
-var elem = document.getElementById('draw-shapes');
-var params = { width: 800, height: 600, type:Two.Types.svg };
-var two = new Two(params).appendTo(elem);
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+document.body.appendChild( renderer.domElement );
+
+var camera = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 1, 1000 );
+// var width = 1000, height = 1000;
+// var camera = new THREE.OrthographicCamera(width / - 2, width / 2, height / 2, height / - 2, 1000, 0);
+camera.position.set(0, 0, 400);
+camera.lookAt(0, 0, 0);
+
+var scene = new THREE.Scene();
+
+//create a blue LineBasicMaterial
+var material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
 
 var scale = 1
 
 function drawConnectedLine(p1, p2) {
-    var line = two.makeLine(p1["pos"][0], p1["pos"][1], p2["pos"][0], p2["pos"][1]);
-    line.linewidth = 3;
-    line.stroke = "rgba(255, 0, 0, 0.5)";
-    console.log(p1, p2);
-    two.update();
+    points = [];
+    points.push( new THREE.Vector3( scale * p1["pos"][0], scale * p1["pos"][1], scale * p1["pos"][2] ) );
+    points.push( new THREE.Vector3( scale * p2["pos"][0], scale * p2["pos"][1], scale * p2["pos"][2] ) );
+    console.log(points)
+    geometry = new THREE.BufferGeometry().setFromPoints( points );
+    line = new THREE.Line( geometry, material );
+    scene.add( line );
 }
 
 function drawLine(line) {
@@ -66,11 +79,10 @@ function decodeMessage(buffer) {
 
         console.log(decodedMessage);
         normalize(decodedMessage);
-        decodedMessage["line"].forEach(drawPolygon);
-        decodedMessage["polygon"].forEach(drawPolygon);
+        decodedMessage["line"].forEach(drawPolygon)
+        decodedMessage["polygon"].forEach(drawPolygon)
 
-        two.update();
-        two.play();
+        renderer.render( scene, camera );
     });
 }
 

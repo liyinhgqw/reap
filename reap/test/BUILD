@@ -1,7 +1,7 @@
 cc_binary(
     name = "test",
     srcs = [
-        "main.cc",
+        "draw_area_bound.cc",
     ],
     linkopts = [
         "-lm",

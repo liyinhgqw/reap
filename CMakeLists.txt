@@ -14,7 +14,7 @@ add_executable(reap
         reap/core/geometry/point.h
         reap/core/geometry/gvector.cc
         reap/core/geometry/gvector.h
-        reap/test/main.cc
+        reap/test/draw_area_bound.cc
         reap/core/geometry/line.cc
         reap/core/geometry/line.h
         reap/core/geometry/polygon.cc

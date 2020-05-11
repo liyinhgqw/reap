@@ -10,7 +10,7 @@ var scale = 1
 
 function drawConnectedLine(p1, p2) {
     var line = two.makeLine(p1["pos"][0], p1["pos"][1], p2["pos"][0], p2["pos"][1]);
-    line.linewidth = 3;
+    line.linewidth = 10;
     line.stroke = "rgba(255, 0, 0, 0.5)";
     console.log(p1, p2);
     two.update();
