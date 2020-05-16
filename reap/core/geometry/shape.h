@@ -3,7 +3,7 @@
 #ifndef REAP_CORE_GEOMETRY_SHAPE_H_
 #define REAP_CORE_GEOMETRY_SHAPE_H_
 
-#include "reap/core/util/status.h"
+#include "reap/core/status.h"
 #include "reap/core/geometry/gvector.h"
 
 namespace reap {

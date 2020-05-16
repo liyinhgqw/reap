@@ -10,10 +10,6 @@ AreaBound::AreaBound(const Polygon &polygon, double angle)
   : polygon_(polygon), angle_(angle) {
 }
 
-AreaBound::AreaBound(Polygon &&polygon, double angle)
-  : polygon_(std::move(polygon)), angle_(angle) {
-}
-
 AreaBound::~AreaBound() {}
 
 }  // namespace reap

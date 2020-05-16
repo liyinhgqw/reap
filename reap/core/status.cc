@@ -1,6 +1,6 @@
 /* Copyright 2020 The REAP Authors. All Rights Reserved. */
 
-#include "reap/core/util/status.h"
+#include "status.h"
 
 #include <memory>
 

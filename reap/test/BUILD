@@ -7,9 +7,21 @@ cc_binary(
         "-lm",
     ],
     deps = [
-        "//reap/core/geometry",
-        "//reap/core/util",
+        "//reap/core",
         "//reap/plan",
         "//reap/proto",
+    ],
+)
+
+cc_binary(
+    name = "test_cgal",
+    srcs = [
+        "test_cgal.cc",
+    ],
+    linkopts = [
+        "-lm",
+    ],
+    deps = [
+        "@cgal",
     ],
 )

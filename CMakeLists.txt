@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(.)
 include_directories(bazel-out/darwin-opt/bin)
+include_directories(bazel-reap/external/cgal)
 
 add_executable(reap
         LICENSE
@@ -21,10 +22,10 @@ add_executable(reap
         reap/core/geometry/polygon.h
         reap/core/geometry/shape.cc
         reap/core/geometry/shape.h
-        reap/core/geometry/serializer.cc
-        reap/core/geometry/serializer.h
-        reap/core/util/status.cc
-        reap/core/util/status.h
-        reap/core/util/error.h
+        reap/core/serializer.cc
+        reap/core/serializer.h
+        reap/core/status.cc
+        reap/core/status.h
+        reap/core/error.h
         reap/plan/area_bound.cc
-        reap/plan/area_bound.h reap/plan/graph_util.cc reap/plan/graph_util.h)
+        reap/plan/area_bound.h reap/plan/graph_util.cc reap/plan/graph_util.h reap/test/test_cgal.cc reap/core/type.h)

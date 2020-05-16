@@ -9,8 +9,7 @@ cc_library(
         "*.cc",
     ]),
     deps = [
-        "//reap/core/geometry",
-        "//reap/core/util",
+        "//reap/core",
         "//reap/proto",
     ],
 )

@@ -5,7 +5,7 @@
 
 #include <ostream>
 
-#include "reap/core/util//status.h"
+#include "reap/core/status.h"
 #include "reap/core/geometry/shape.h"
 #include "reap/core/geometry/gvector.h"
 

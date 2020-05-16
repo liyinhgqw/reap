@@ -4,7 +4,7 @@
 #define REAP_PLAN_GRAPH_UTIL_H_
 
 #include "reap/proto/geometry.pb.h"
-#include "reap/core/geometry/serializer.h"
+#include "reap/core/serializer.h"
 #include "reap/plan/area_bound.h"
 
 namespace reap {

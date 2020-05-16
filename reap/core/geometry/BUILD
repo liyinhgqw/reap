@@ -10,7 +10,6 @@ cc_library(
     ]),
     deps = [
         "//reap/core/util",
-        "//reap/proto",
     ],
     alwayslink = 1,
 )

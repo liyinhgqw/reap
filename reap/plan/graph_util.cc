@@ -6,8 +6,8 @@ namespace reap {
 
 Status AreaBoundToGraph(const AreaBound &area_bound, Graph *graph) {
   ShapeSerializer serializer;
-  auto plg = graph->add_polygon();
-  return serializer.Serialize(area_bound.polygon(), plg);
+  auto polygon = graph->add_polygon();
+  return serializer.Serialize(area_bound.polygon(), polygon);
 }
 
 }  // namespace reap

@@ -6,7 +6,7 @@
 #include <memory>
 #include <string>
 
-#include "reap/core/util/error.h"
+#include "error.h"
 
 namespace reap {
 

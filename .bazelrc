@@ -8,6 +8,7 @@ build --output_filter="^//"
 build --show_timestamps
 # build with profiling
 build:cpu_prof --linkopt=-lprofiler
+build --cxxopt=-std=c++14
 build --copt="-Werror=sign-compare"
 build --copt="-Werror=return-type"
 build --copt="-Werror=reorder"
@@ -17,14 +18,6 @@ build --copt="-O3"
 
 # Make Bazel print out all options from rc files.
 build --announce_rc
-
-# By default, build TF in C++ 14 mode.
-build:linux --cxxopt=-std=c++14
-build:linux --host_cxxopt=-std=c++14
-build:macos --cxxopt=-std=c++14
-build:macos --host_cxxopt=-std=c++14
-build:windows --cxxopt=/std:c++14
-build:windows --host_cxxopt=/std:c++14
 
 # Test
 test --spawn_strategy=standalone

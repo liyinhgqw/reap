@@ -3,14 +3,13 @@
 #ifndef REAP_PLAN_AREA_BOUND_H_
 #define REAP_PLAN_AREA_BOUND_H_
 
-#include "reap/core/geometry/polygon.h"
+#include "reap/core/type.h"
 
 namespace reap {
 
 class AreaBound {
  public:
   explicit AreaBound(const Polygon &polygon, double angle = 0.0);
-  explicit AreaBound(Polygon &&polygon, double angle = 0.0);
   virtual ~AreaBound();
 
   Polygon polygon() const {
