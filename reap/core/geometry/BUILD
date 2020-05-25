@@ -9,7 +9,7 @@ cc_library(
         "*.cc",
     ]),
     deps = [
-        "//reap/core/util",
+        "//reap/core",
     ],
     alwayslink = 1,
 )

@@ -10,6 +10,7 @@
 
 #include "reap/plan/area_bound.h"
 #include "reap/plan/graph_util.h"
+#include "reap/plan/plan.h"
 
 using namespace reap;  // NOLINT(build/namespaces)
 using namespace std;  // NOLINT(build/namespaces)
@@ -28,10 +29,29 @@ int main() {
                       {518262.082, 292484.376},
   };
   Polygon polygon(points.begin(), points.end());
-  AreaBound area_bound(std::move(polygon), 0.0);
+  AreaBound area_bound(polygon, -30.0 * M_PI / 180.0);
+  auto rotated_area_bound = area_bound.Rotate();
 
   Graph graph;
-  AreaBoundToGraph(area_bound, &graph);
+  AreaBoundToGraph(rotated_area_bound, &graph);
+
+  PlanConfig plan_config {
+    .num_of_floors = 10,
+    .floor_height = 3.0,
+    .building_width = 15.0,
+    .spacing_ratio = 1.6,
+    .first_row_offset = 20.0
+  };
+  Plan plan(plan_config, area_bound);
+  Arrangement arrangement;
+  std::cout << "start to arrange\n";
+  plan.arrange(&arrangement);
+  std::cout << "finish arranged\n";
+  ArrangementToGraph(arrangement, &graph);
+
+  std::string s;
+  google::protobuf::TextFormat::PrintToString(graph, &s);
+  std::cout << s << std::endl;
 
   fstream output("area_bound.pb", ios::out | ios::trunc | ios::binary);
   if (!graph.SerializeToOstream(&output)) {

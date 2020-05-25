@@ -28,4 +28,4 @@ add_executable(reap
         reap/core/status.h
         reap/core/error.h
         reap/plan/area_bound.cc
-        reap/plan/area_bound.h reap/plan/graph_util.cc reap/plan/graph_util.h reap/test/test_cgal.cc reap/core/type.h)
+        reap/plan/area_bound.h reap/plan/graph_util.cc reap/plan/graph_util.h reap/test/test_cgal.cc reap/core/type.h reap/core/geometry/geometry.h reap/core/geometry/geometry.cc reap/plan/plan.cc reap/plan/plan.h reap/plan/arrangement.h reap/test/test_arrangement.cc reap/plan/plan_config.h)

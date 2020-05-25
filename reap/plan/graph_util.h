@@ -6,10 +6,14 @@
 #include "reap/proto/geometry.pb.h"
 #include "reap/core/serializer.h"
 #include "reap/plan/area_bound.h"
+#include "reap/plan/plan.h"
 
 namespace reap {
 
 Status AreaBoundToGraph(const AreaBound &area_bound, Graph *graph);
+
+Status ArrangementToGraph(const Arrangement &area_bound, Graph *graph);
+
 
 }  // namespace reap
 

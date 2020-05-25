@@ -5,6 +5,8 @@
 
 #include "reap/core/type.h"
 
+#include <cmath>
+
 namespace reap {
 
 class AreaBound {
@@ -23,6 +25,8 @@ class AreaBound {
   void SetAngle(double angle) {
     angle_ = angle;
   }
+
+  AreaBound Rotate() const;
 
  private:
   Polygon polygon_;

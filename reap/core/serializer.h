@@ -18,6 +18,7 @@ class ShapeSerializer {
 
   Status Serialize(const Polygon &polygon, GPolygon *message);
   Status Serialize(const Point &point, GPoint *message);
+  Status Serialize(const Segment &segment, GLine *message);
 };
 
 }  // namespace reap
