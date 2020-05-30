@@ -55,7 +55,7 @@ int main() {
       };
       Plan plan(plan_config, area_bound);
       Arrangement arrangement(plan_config);
-      plan.arrange(&arrangement);
+      plan.ArrangeRow(&arrangement, 0, std::numeric_limits<double>::max());
       arrangements.push_back(arrangement);
     }
   }

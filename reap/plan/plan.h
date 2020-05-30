@@ -17,7 +17,7 @@ class Plan {
         area_bound_(area_bound) {}
   virtual ~Plan() {}
 
-  void arrange(Arrangement *arrangement);
+  void ArrangeRow(Arrangement *arrangement, double min_x, double max_x);
 
  private:
   PlanConfig config_;

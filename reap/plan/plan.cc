@@ -6,6 +6,8 @@ namespace reap {
 
 namespace {
 
+constexpr double kEps = 1e-6;
+
 double GetLeftXOfSegmentOrPoint(const CGAL::cpp11::result_of<Intersect(Segment, Line)>::type& shape) {
   if (const Segment* s = boost::get<Segment>(&*shape)) {
     return s->min().x();
@@ -32,7 +34,7 @@ void InsertSegment(RowArrangement &row_arrangement, const Segment &s) {
 
 }  // namespace
 
-void Plan::arrange(Arrangement *arrangement) {
+void Plan::ArrangeRow(Arrangement *arrangement, double min_x, double max_x) {
   // rotate area to align with main direction
   auto normalized_area_bound = area_bound_.Rotate();
   auto polygon = normalized_area_bound.polygon();
@@ -40,8 +42,8 @@ void Plan::arrange(Arrangement *arrangement) {
   // calculate bound
   auto max_y = polygon.top_vertex()->y();
   auto min_y = polygon.bottom_vertex()->y();
-//  auto max_x = polygon.right_vertex()->x();
-//  auto min_x = polygon.left_vertex()->x();
+  max_x = std::min(max_x, polygon.right_vertex()->x());
+  min_x = std::max(min_x, polygon.left_vertex()->x());
 
   double building_height = config_.floor_height * config_.num_of_floors;
   double building_dist = config_.spacing_ratio * building_height + config_.building_width;
@@ -75,7 +77,11 @@ void Plan::arrange(Arrangement *arrangement) {
         if (last_point) {
           Point mid_point((p->x() + last_point->x()) / 2.0, (p->y() + last_point->y()) / 2.0);
           if (polygon.bounded_side(mid_point) == CGAL::ON_BOUNDED_SIDE) {
-            InsertSegment(row_arrangement, Segment(*last_point, *p));
+            double left = std::max(min_x, last_point->x());
+            double right = std::min(max_x, p->x());
+            if (right - left > kEps) {
+              InsertSegment(row_arrangement, Segment(Point(left, y), Point(right, y)));
+            }
           }
         }
         last_point = p;
