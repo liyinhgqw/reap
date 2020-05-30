@@ -16,11 +16,9 @@ struct RowArrangement {
 
 class Arrangement {
  public:
+  Arrangement() {}
   Arrangement(const PlanConfig &plan_config)
       : plan_config_(plan_config) {}
-  Arrangement(const Arrangement &other)
-      : plan_config_(other.plan_config_),
-      row_arrangement_(other.row_arrangement_) {}
 
   double GetTotalVolume() const {
     double len = 0;
@@ -36,7 +34,7 @@ class Arrangement {
     return GetTotalVolume() > other.GetTotalVolume();
   }
 
-  const PlanConfig &plan_config() const {
+  const PlanConfig &config() const {
     return plan_config_;
   }
 
@@ -51,6 +49,38 @@ class Arrangement {
  private:
   PlanConfig plan_config_;
   std::vector<RowArrangement> row_arrangement_;
+};
+
+class ColumnArrangement {
+ public:
+  ColumnArrangement() {}
+
+  const std::vector<Arrangement> &arrangement() const {
+    return arrangement_;
+  }
+
+  std::vector<Arrangement> &arrangement() {
+    return arrangement_;
+  }
+
+  void AddColumn(const Arrangement &arrangement) {
+    arrangement_.push_back(arrangement);
+  }
+
+  double GetTotalVolume() const {
+    double len = 0;
+    for (auto &col : arrangement_) {
+      len += col.GetTotalVolume();
+    }
+    return len;
+  }
+
+  bool operator<(const ColumnArrangement &other) const {
+    return GetTotalVolume() > other.GetTotalVolume();
+  }
+
+ private:
+  std::vector<Arrangement> arrangement_;
 };
 
 }  // namespace reap

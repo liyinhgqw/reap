@@ -19,6 +19,10 @@ class Plan {
 
   void ArrangeRow(Arrangement *arrangement, double min_x, double max_x);
 
+  void SelectRow(Arrangement *arrangement, double min_x, double max_x);
+
+  void ArrangeColumn(ColumnArrangement *columns);
+
  private:
   PlanConfig config_;
   AreaBound area_bound_;

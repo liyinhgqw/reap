@@ -11,6 +11,7 @@ struct PlanConfig {
   double building_width;
   double spacing_ratio;
   double first_row_offset;
+  int num_of_columns;  // just a hint
 };
 
 }  // namespace reap

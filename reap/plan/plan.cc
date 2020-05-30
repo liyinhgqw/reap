@@ -35,9 +35,7 @@ void InsertSegment(RowArrangement &row_arrangement, const Segment &s) {
 }  // namespace
 
 void Plan::ArrangeRow(Arrangement *arrangement, double min_x, double max_x) {
-  // rotate area to align with main direction
-  auto normalized_area_bound = area_bound_.Rotate();
-  auto polygon = normalized_area_bound.polygon();
+  auto polygon = area_bound_.polygon();
 
   // calculate bound
   auto max_y = polygon.top_vertex()->y();
@@ -45,11 +43,12 @@ void Plan::ArrangeRow(Arrangement *arrangement, double min_x, double max_x) {
   max_x = std::min(max_x, polygon.right_vertex()->x());
   min_x = std::max(min_x, polygon.left_vertex()->x());
 
-  double building_height = config_.floor_height * config_.num_of_floors;
-  double building_dist = config_.spacing_ratio * building_height + config_.building_width;
-  double first_row_offset = config_.first_row_offset;
+  auto row_config = arrangement->config();
+  double building_height = row_config.floor_height * row_config.num_of_floors;
+  double building_dist = row_config.spacing_ratio * building_height + row_config.building_width;
+  double first_row_offset = row_config.first_row_offset;
 
-  for (double y = max_y - first_row_offset; y > min_y + config_.building_width; y -= building_dist) {
+  for (double y = max_y - first_row_offset; y > min_y + row_config.building_width; y -= building_dist) {
     RowArrangement row_arrangement;
 
     auto y_line = Line(0, 1, -y);  // y = y0;
@@ -89,6 +88,68 @@ void Plan::ArrangeRow(Arrangement *arrangement, double min_x, double max_x) {
     }
 
     arrangement->row_arrangement().push_back(row_arrangement);
+  }
+}
+
+void Plan::SelectRow(Arrangement *arrangement, double min_x, double max_x) {
+  std::vector<Arrangement> arrangements;
+
+  for (int num_of_floors = 1; num_of_floors <= 18; ++num_of_floors) {
+    double dist = config_.spacing_ratio * (config_.building_width + num_of_floors * config_.floor_height);
+    for (double first_row_offset = 0.0; first_row_offset < dist; first_row_offset += 1.0) {
+      PlanConfig plan_config {
+          .num_of_floors = num_of_floors,
+          .floor_height = config_.floor_height,
+          .building_width = config_.building_width,
+          .spacing_ratio = config_.spacing_ratio,
+          .first_row_offset = first_row_offset,
+          .num_of_columns = config_.num_of_columns,
+      };
+      Arrangement arr(plan_config);
+      ArrangeRow(&arr, min_x, max_x);
+      arrangements.push_back(arr);
+    }
+  }
+
+  std::sort(arrangements.begin(), arrangements.end());
+  *arrangement = arrangements[0];
+}
+
+void Plan::ArrangeColumn(ColumnArrangement *columns) {
+  auto polygon = area_bound_.polygon();
+  std::vector<double> xs;
+  for (auto it = polygon.vertices_begin(); it != polygon.vertices_end(); it++) {
+    auto point = *it;
+    xs.push_back(point.x());
+  }
+  sort(xs.begin(), xs.end());
+
+  if (xs.size() < 2) return;
+  int cols = config_.num_of_columns;
+  double total_width = xs.back() - xs[0];
+  double avg_col_len = total_width / cols;
+
+  std::vector<std::pair<double, double>> col_segs;
+  double last = xs[0];
+
+  for (std::size_t i = 1; i < xs.size(); ++i) {
+    double dx = xs[i] - last;
+    if (dx >= avg_col_len) {
+      col_segs.emplace_back(last, xs[i]);
+      last = xs[i];
+    } else if (i + 1 == xs.size()) {
+      if (col_segs.empty()) {
+        col_segs.emplace_back(last, xs[i]);
+      } else {
+        col_segs.back().second = xs[i];
+      }
+    }
+  }
+
+  for (auto &s : col_segs) {
+    Arrangement arrangement;
+    SelectRow(&arrangement, s.first, s.second);
+    columns->AddColumn(arrangement);
   }
 }
 

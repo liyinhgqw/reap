@@ -21,4 +21,13 @@ Status ArrangementToGraph(const Arrangement &arrangement, Graph *graph) {
   return Status::OK();
 }
 
+Status ColumnArrangementToGraph(const ColumnArrangement &arrangement, Graph *graph) {
+  ShapeSerializer serializer;
+  for (auto & column: arrangement.arrangement()) {
+    ArrangementToGraph(column, graph);
+  }
+  return Status::OK();
+}
+
+
 }  // namespace reap

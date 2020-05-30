@@ -37,34 +37,21 @@ int main() {
   Graph graph;
   AreaBoundToGraph(rotated_area_bound, &graph);
 
-  double floor_height = 3.0;
-  double building_width = 15.0;
-  double spacing_ratio = 1.6;
+  PlanConfig plan_config {
+      .num_of_floors = 0,
+      .floor_height = 3.0,
+      .building_width = 15.0,
+      .spacing_ratio = 1.6,
+      .first_row_offset = 0,
+      .num_of_columns = 4,
+  };
 
-  std::vector<Arrangement> arrangements;
+  Plan plan(plan_config, rotated_area_bound);
+  ColumnArrangement col_arrangement;
+  plan.ArrangeColumn(&col_arrangement);
 
-  for (int num_of_floors = 1; num_of_floors <= 18; ++num_of_floors) {
-    double dist = spacing_ratio * (building_width + num_of_floors * floor_height);
-    for (double first_row_offset = 0.0; first_row_offset < dist; first_row_offset += 1.0) {
-      PlanConfig plan_config {
-          .num_of_floors = num_of_floors,
-          .floor_height = floor_height,
-          .building_width = building_width,
-          .spacing_ratio = spacing_ratio,
-          .first_row_offset = first_row_offset,
-      };
-      Plan plan(plan_config, area_bound);
-      Arrangement arrangement(plan_config);
-      plan.ArrangeRow(&arrangement, 0, std::numeric_limits<double>::max());
-      arrangements.push_back(arrangement);
-    }
-  }
+  ColumnArrangementToGraph(col_arrangement, &graph);
 
-  std::sort(arrangements.begin(), arrangements.end());
-
-  Arrangement &best_arrangement = arrangements[0];
-  std::cout << best_arrangement.plan_config().num_of_floors << " " << best_arrangement.plan_config().first_row_offset << std::endl;
-  ArrangementToGraph(best_arrangement, &graph);
 
 
 //  std::string s;

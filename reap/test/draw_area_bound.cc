@@ -40,12 +40,12 @@ int main() {
     .floor_height = 3.0,
     .building_width = 15.0,
     .spacing_ratio = 1.6,
-    .first_row_offset = 20.0
+    .first_row_offset = 20.0,
   };
   Plan plan(plan_config, area_bound);
   Arrangement arrangement;
   std::cout << "start to arrange\n";
-  plan.arrange(&arrangement);
+  plan.ArrangeRow(&arrangement);
   std::cout << "finish arranged\n";
   ArrangementToGraph(arrangement, &graph);
 
