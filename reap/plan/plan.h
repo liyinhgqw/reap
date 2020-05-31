@@ -19,9 +19,9 @@ class Plan {
 
   void ArrangeRow(Arrangement *arrangement, double min_x, double max_x);
 
-  void SelectRow(Arrangement *arrangement, double min_x, double max_x);
+  void SelectRowArrangement(double min_x, double max_x, std::size_t k, std::vector<Arrangement> *row_options);
 
-  void ArrangeColumn(ColumnArrangement *columns);
+  void ArrangeColumn(std::size_t k, std::vector<ColumnArrangement> *column_options);
 
  private:
   PlanConfig config_;

@@ -2,6 +2,8 @@
 
 #include "reap/plan/plan.h"
 
+#include <queue>
+
 namespace reap {
 
 namespace {
@@ -91,7 +93,7 @@ void Plan::ArrangeRow(Arrangement *arrangement, double min_x, double max_x) {
   }
 }
 
-void Plan::SelectRow(Arrangement *arrangement, double min_x, double max_x) {
+void Plan::SelectRowArrangement(double min_x, double max_x, std::size_t k, std::vector<Arrangement> *row_options) {
   std::vector<Arrangement> arrangements;
 
   for (int num_of_floors = 1; num_of_floors <= 18; ++num_of_floors) {
@@ -112,10 +114,11 @@ void Plan::SelectRow(Arrangement *arrangement, double min_x, double max_x) {
   }
 
   std::sort(arrangements.begin(), arrangements.end());
-  *arrangement = arrangements[0];
+  k = std::min(k, arrangements.size());
+  row_options->insert(row_options->end(), arrangements.begin(), arrangements.begin() + k);
 }
 
-void Plan::ArrangeColumn(ColumnArrangement *columns) {
+void Plan::ArrangeColumn(std::size_t k, std::vector<ColumnArrangement> *column_options) {
   auto polygon = area_bound_.polygon();
   std::vector<double> xs;
   for (auto it = polygon.vertices_begin(); it != polygon.vertices_end(); it++) {
@@ -146,10 +149,55 @@ void Plan::ArrangeColumn(ColumnArrangement *columns) {
     }
   }
 
+  std::vector<std::vector<Arrangement>> choices;
   for (auto &s : col_segs) {
-    Arrangement arrangement;
-    SelectRow(&arrangement, s.first, s.second);
-    columns->AddColumn(arrangement);
+    std::vector<Arrangement> row_options;
+    SelectRowArrangement(s.first, s.second, 100, &row_options);
+    choices.push_back(row_options);
+  }
+
+  typedef std::vector<int> vi;
+  auto get_total_volume = [&](const vi &v) {
+    double res = 0.0;
+    for (std::size_t i = 0; i < v.size(); ++i) {
+      if (v[i] < static_cast<int>(choices[i].size())) {
+        res += choices[i][v[i]].GetTotalVolume();
+      }
+    }
+
+    return res;
+  };
+
+  auto comp = [&](const vi &lhs, const vi &rhs) {
+    return get_total_volume(lhs) < get_total_volume(rhs);
+  };
+
+  std::priority_queue<vi, std::vector<vi>, decltype(comp)> q(comp);
+  std::set<vi> visited;
+
+  vi s(col_segs.size(), 0);
+  q.push(s);
+  visited.insert(s);
+
+  for (std::size_t i = 0; i < k && !q.empty(); ++i) {
+    auto p = q.top();
+    q.pop();
+    ColumnArrangement column_arrangement;
+    for (std::size_t j = 0; j < s.size(); ++j) {
+      column_arrangement.AddColumn(choices[j][p[j]]);
+    }
+    column_options->push_back(column_arrangement);
+
+    for (std::size_t j = 0; j < p.size(); ++j) {
+      if (p[j] + 1 < static_cast<int>(choices[j].size())) {
+        ++p[j];
+        if (visited.find(p) == visited.end()) {
+          q.push(p);
+          visited.insert(p);
+        }
+        --p[j];
+      }
+    }
   }
 }
 

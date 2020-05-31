@@ -47,10 +47,10 @@ int main() {
   };
 
   Plan plan(plan_config, rotated_area_bound);
-  ColumnArrangement col_arrangement;
-  plan.ArrangeColumn(&col_arrangement);
-
-  ColumnArrangementToGraph(col_arrangement, &graph);
+  std::vector<ColumnArrangement> col_arrangements;
+  std::size_t k = 10;
+  plan.ArrangeColumn(k, &col_arrangements);
+  ColumnArrangementToGraph(col_arrangements[9], &graph);
 
 
 
