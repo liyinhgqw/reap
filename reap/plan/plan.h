@@ -17,9 +17,9 @@ class Plan {
         area_bound_(area_bound) {}
   virtual ~Plan() {}
 
-  void ArrangeRow(Arrangement *arrangement, double min_x, double max_x);
+  void ArrangeRow(double min_x, double max_x, RowArrangement *arrangement);
 
-  void SelectRow(Arrangement *arrangement, double min_x, double max_x);
+  void ArrangeAndSelectRow(double min_x, double max_x, RowArrangement *arrangement);
 
   void ArrangeColumn(ColumnArrangement *columns);
 

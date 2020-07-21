@@ -10,19 +10,19 @@
 
 namespace reap {
 
-struct RowArrangement {
+struct Row {
   std::vector<Segment> segments;
 };
 
-class Arrangement {
+class RowArrangement {
  public:
-  Arrangement() {}
-  Arrangement(const PlanConfig &plan_config)
+  RowArrangement() {}
+  RowArrangement(const PlanConfig &plan_config)
       : plan_config_(plan_config) {}
 
   double GetTotalVolume() const {
     double len = 0;
-    for (auto &row : row_arrangement_) {
+    for (auto &row : rows_) {
       for (auto &s : row.segments) {
         len += sqrt(s.squared_length());
       }
@@ -30,7 +30,7 @@ class Arrangement {
     return len * plan_config_.num_of_floors * plan_config_.floor_height;
   }
 
-  bool operator<(const Arrangement &other) const {
+  bool operator<(const RowArrangement &other) const {
     return GetTotalVolume() > other.GetTotalVolume();
   }
 
@@ -38,32 +38,32 @@ class Arrangement {
     return plan_config_;
   }
 
-  const std::vector<RowArrangement> &row_arrangement() const {
-    return row_arrangement_;
+  const std::vector<Row> &rows() const {
+    return rows_;
   }
 
-  std::vector<RowArrangement> &row_arrangement() {
-    return row_arrangement_;
+  std::vector<Row> &rows() {
+    return rows_;
   }
 
  private:
   PlanConfig plan_config_;
-  std::vector<RowArrangement> row_arrangement_;
+  std::vector<Row> rows_;
 };
 
 class ColumnArrangement {
  public:
   ColumnArrangement() {}
 
-  const std::vector<Arrangement> &arrangement() const {
+  const std::vector<RowArrangement> &arrangement() const {
     return arrangement_;
   }
 
-  std::vector<Arrangement> &arrangement() {
+  std::vector<RowArrangement> &arrangement() {
     return arrangement_;
   }
 
-  void AddColumn(const Arrangement &arrangement) {
+  void AddColumn(const RowArrangement &arrangement) {
     arrangement_.push_back(arrangement);
   }
 
@@ -80,7 +80,8 @@ class ColumnArrangement {
   }
 
  private:
-  std::vector<Arrangement> arrangement_;
+  // row arrangement for each column
+  std::vector<RowArrangement> arrangement_;
 };
 
 }  // namespace reap

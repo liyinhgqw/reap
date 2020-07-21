@@ -6,9 +6,13 @@
 #include <memory>
 #include <string>
 
-#include "error.h"
-
 namespace reap {
+
+namespace error {
+  enum Code {
+    OK
+  };
+};
 
 class Status {
  public:

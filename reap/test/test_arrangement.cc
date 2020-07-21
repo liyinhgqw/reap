@@ -43,7 +43,7 @@ int main() {
       .building_width = 15.0,
       .spacing_ratio = 1.6,
       .first_row_offset = 0,
-      .num_of_columns = 4,
+      .num_of_columns = 5,
   };
 
   Plan plan(plan_config, rotated_area_bound);

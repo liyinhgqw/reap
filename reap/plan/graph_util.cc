@@ -10,10 +10,10 @@ Status AreaBoundToGraph(const AreaBound &area_bound, Graph *graph) {
   return serializer.Serialize(area_bound.polygon(), polygon);
 }
 
-Status ArrangementToGraph(const Arrangement &arrangement, Graph *graph) {
+Status RowArrangementToGraph(const RowArrangement &row_arrangement, Graph *graph) {
   ShapeSerializer serializer;
-  for (auto row_arrangement : arrangement.row_arrangement()) {
-    for (auto segment: row_arrangement.segments) {
+  for (auto row : row_arrangement.rows()) {
+    for (auto &segment: row.segments) {
       auto line = graph->add_line();
       serializer.Serialize(segment, line);
     }
@@ -24,7 +24,7 @@ Status ArrangementToGraph(const Arrangement &arrangement, Graph *graph) {
 Status ColumnArrangementToGraph(const ColumnArrangement &arrangement, Graph *graph) {
   ShapeSerializer serializer;
   for (auto & column: arrangement.arrangement()) {
-    ArrangementToGraph(column, graph);
+    RowArrangementToGraph(column, graph);
   }
   return Status::OK();
 }

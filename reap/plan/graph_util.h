@@ -12,7 +12,7 @@ namespace reap {
 
 Status AreaBoundToGraph(const AreaBound &area_bound, Graph *graph);
 
-Status ArrangementToGraph(const Arrangement &area_bound, Graph *graph);
+Status RowArrangementToGraph(const RowArrangement &area_bound, Graph *graph);
 
 Status ColumnArrangementToGraph(const ColumnArrangement &area_bound, Graph *graph);
 
