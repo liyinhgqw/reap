@@ -3,19 +3,14 @@
 #ifndef REAP_PLAN_GRAPH_UTIL_H_
 #define REAP_PLAN_GRAPH_UTIL_H_
 
-#include "reap/proto/geometry.pb.h"
 #include "reap/core/serializer.h"
-#include "reap/plan/area_bound.h"
-#include "reap/plan/plan.h"
+#include "reap/plan/outline_plan.h"
 
 namespace reap {
 
-Status AreaBoundToGraph(const AreaBound &area_bound, Graph *graph);
+void AreaBoundToGraph(const AreaBound &area_bound, Graph *graph);
 
-Status RowArrangementToGraph(const RowArrangement &area_bound, Graph *graph);
-
-Status ColumnArrangementToGraph(const ColumnArrangement &area_bound, Graph *graph);
-
+void OutlinePlanToGraph(const OutlinePlanResult &outline_plan_result, Graph *graph);
 
 }  // namespace reap
 

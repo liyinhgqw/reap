@@ -4,29 +4,18 @@
 
 namespace reap {
 
-Status AreaBoundToGraph(const AreaBound &area_bound, Graph *graph) {
+void AreaBoundToGraph(const AreaBound &area_bound, Graph *graph) {
   ShapeSerializer serializer;
   auto polygon = graph->add_polygon();
-  return serializer.Serialize(area_bound.polygon(), polygon);
+  serializer.Serialize(area_bound.polygon(), polygon);
 }
 
-Status RowArrangementToGraph(const RowArrangement &row_arrangement, Graph *graph) {
+void OutlinePlanToGraph(const OutlinePlanResult &outline_plan_result, Graph *graph) {
   ShapeSerializer serializer;
-  for (auto row : row_arrangement.rows()) {
-    for (auto &segment: row.segments) {
-      auto line = graph->add_line();
-      serializer.Serialize(segment, line);
-    }
+  for (auto &segment : outline_plan_result.segments) {
+    auto line = graph->add_line();
+    serializer.Serialize(segment, line);
   }
-  return Status::OK();
-}
-
-Status ColumnArrangementToGraph(const ColumnArrangement &arrangement, Graph *graph) {
-  ShapeSerializer serializer;
-  for (auto & column: arrangement.arrangement()) {
-    RowArrangementToGraph(column, graph);
-  }
-  return Status::OK();
 }
 
 

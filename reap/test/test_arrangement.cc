@@ -12,7 +12,7 @@
 #include "reap/plan/area_bound.h"
 #include "reap/plan/arrangement.h"
 #include "reap/plan/graph_util.h"
-#include "reap/plan/plan.h"
+#include "reap/plan/outline_mesh_plan.h"
 
 using namespace reap;  // NOLINT(build/namespaces)
 using namespace std;  // NOLINT(build/namespaces)
@@ -46,13 +46,10 @@ int main() {
       .num_of_columns = 5,
   };
 
-  Plan plan(plan_config, rotated_area_bound);
-  ColumnArrangement col_arrangement;
-  plan.ArrangeColumn(&col_arrangement);
-
-  ColumnArrangementToGraph(col_arrangement, &graph);
-
-
+  OutlineMeshPlan plan(plan_config, rotated_area_bound);
+  OutlinePlanResult outline_plan_result;
+  plan.Plan(&outline_plan_result);
+  OutlinePlanToGraph(outline_plan_result, &graph);
 
 //  std::string s;
 //  google::protobuf::TextFormat::PrintToString(graph, &s);

@@ -1,6 +1,6 @@
 /* Copyright 2020 The REAP Authors. All Rights Reserved. */
 
-#include "reap/plan/plan.h"
+#include "reap/plan/outline_mesh_plan.h"
 
 namespace reap {
 
@@ -8,11 +8,11 @@ namespace {
 
 constexpr double kEps = 1e-6;
 
-double GetLeftXOfSegmentOrPoint(const CGAL::cpp11::result_of<Intersect(Segment, Line)>::type& shape) {
-  if (const Segment* s = boost::get<Segment>(&*shape)) {
+double GetLeftXOfSegmentOrPoint(const CGAL::cpp11::result_of<Intersect(Segment, Line)>::type &shape) {
+  if (const Segment *s = boost::get<Segment>(&*shape)) {
     return s->min().x();
   } else {
-    const Point* p = boost::get<Point>(&*shape);
+    const Point *p = boost::get<Point>(&*shape);
     return p->x();
   }
 }
@@ -51,10 +51,10 @@ void CalRow(const Polygon &polygon, double y, double min_x, double max_x, Row *r
 
   // arrange for a row
   for (auto &intersect: intersects) {
-    if (const Segment* s = boost::get<Segment>(&*intersect)) {
+    if (const Segment *s = boost::get<Segment>(&*intersect)) {
       InsertSegment(*s, row);
     } else {
-      const Point* p = boost::get<Point>(&*intersect);
+      const Point *p = boost::get<Point>(&*intersect);
       if (last_point) {
         Point mid_point((p->x() + last_point->x()) / 2.0, (p->y() + last_point->y()) / 2.0);
         if (polygon.bounded_side(mid_point) == CGAL::ON_BOUNDED_SIDE) {
@@ -97,7 +97,17 @@ void IntersectRow(const Row &r1, const Row &r2, Row *r) {
 
 }  // namespace
 
-void Plan::ArrangeRow(double min_x, double max_x, RowArrangement *arrangement) {
+void OutlineMeshPlan::Plan(OutlinePlanResult *plan_result) {
+  ColumnArrangement arrangement;
+  ArrangeColumn(&arrangement);
+  for (auto &row_arrangement: arrangement.arrangement()) {
+    for (auto &row : row_arrangement.rows()) {
+      plan_result->segments.insert(plan_result->segments.end(), row.segments.begin(), row.segments.end());
+    }
+  }
+}
+
+void OutlineMeshPlan::ArrangeRow(double min_x, double max_x, RowArrangement *arrangement) {
   auto polygon = area_bound_.polygon();
 
   // calculate bound
@@ -121,7 +131,7 @@ void Plan::ArrangeRow(double min_x, double max_x, RowArrangement *arrangement) {
   }
 }
 
-void Plan::ArrangeAndSelectRow(double min_x, double max_x, RowArrangement *arrangement) {
+void OutlineMeshPlan::ArrangeAndSelectRow(double min_x, double max_x, RowArrangement *arrangement) {
   std::vector<RowArrangement> row_arrangements;
 
   // params: num_of_floors, first_row_offset
@@ -142,7 +152,7 @@ void Plan::ArrangeAndSelectRow(double min_x, double max_x, RowArrangement *arran
   *arrangement = row_arrangements[0];
 }
 
-void Plan::ArrangeColumn(ColumnArrangement *columns) {
+void OutlineMeshPlan::ArrangeColumn(ColumnArrangement *columns) {
   auto polygon = area_bound_.polygon();
   std::vector<double> xs;
   for (auto it = polygon.vertices_begin(); it != polygon.vertices_end(); it++) {
