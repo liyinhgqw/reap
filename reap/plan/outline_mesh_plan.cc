@@ -102,7 +102,12 @@ void OutlineMeshPlan::Plan(OutlinePlanResult *plan_result) {
   ArrangeColumn(&arrangement);
   for (auto &row_arrangement: arrangement.arrangement()) {
     for (auto &row : row_arrangement.rows()) {
-      plan_result->segments.insert(plan_result->segments.end(), row.segments.begin(), row.segments.end());
+      for (auto &seg : row.segments) {
+        BuildingOutline building_outline {
+          .segment = seg,
+        };
+        plan_result->building_outline.push_back(building_outline);
+      }
     }
   }
 }

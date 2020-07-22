@@ -10,8 +10,12 @@
 
 namespace reap {
 
+struct BuildingOutline {
+  Segment segment;
+};
+
 struct OutlinePlanResult {
-  std::vector<Segment> segments;
+  std::vector<BuildingOutline> building_outline;
 };
 
 class OutlinePlan {

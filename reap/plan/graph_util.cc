@@ -12,9 +12,9 @@ void AreaBoundToGraph(const AreaBound &area_bound, Graph *graph) {
 
 void OutlinePlanToGraph(const OutlinePlanResult &outline_plan_result, Graph *graph) {
   ShapeSerializer serializer;
-  for (auto &segment : outline_plan_result.segments) {
+  for (auto &building_outline : outline_plan_result.building_outline) {
     auto line = graph->add_line();
-    serializer.Serialize(segment, line);
+    serializer.Serialize(building_outline.segment, line);
   }
 }
 
